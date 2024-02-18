@@ -1,0 +1,1 @@
+This project is replicated from [Spring Boot Integration Testing with Test Containers (PostgreSQL)](https://blog.devgenius.io/spring-boot-integration-testing-with-test-containers-postgresql-fcb8e46d43b3) and [GitHub Repository](https://github.com/mertcakmak2/Medium-Stories-Projects/tree/master/spring-test-containers).
