@@ -2,7 +2,10 @@ package com.mywork.springtestcontainers.integrationtest;
 
 import com.mywork.springtestcontainers.domain.User;
 import com.mywork.springtestcontainers.repository.UserRepository;
+import com.mywork.springtestcontainers.service.UserServiceImpl;
 import org.junit.jupiter.api.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
@@ -20,6 +23,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class UserControllerTest {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserControllerTest.class);
+
     @Container
     static PostgreSQLContainer postgresqlContainer = new PostgreSQLContainer("postgres:15")
             .withDatabaseName("test")
@@ -31,6 +36,8 @@ public class UserControllerTest {
         registry.add("spring.datasource.url", postgresqlContainer::getJdbcUrl);
         registry.add("spring.datasource.username", postgresqlContainer::getUsername);
         registry.add("spring.datasource.password", postgresqlContainer::getPassword);
+
+        logger.info("Registry set up: " + registry);
     }
 
     @Autowired
@@ -68,6 +75,7 @@ public class UserControllerTest {
 
         ResponseEntity<User> createResponse = restTemplate.postForEntity("/api/v1/users", user, User.class);
         User savedUser = createResponse.getBody();
+        logger.info("Returned {}", savedUser);
 
         // org.junit.jupiter.api.Assertions
         assertEquals(HttpStatus.CREATED, createResponse.getStatusCode());
@@ -85,6 +93,7 @@ public class UserControllerTest {
 
         ResponseEntity<User> findUserByIdResponse = restTemplate.getForEntity(url, User.class);
         User existUser = findUserByIdResponse.getBody();
+        logger.info("Returned {}", existUser);
 
         // org.junit.jupiter.api.Assertions
         assertEquals(HttpStatus.OK, findUserByIdResponse.getStatusCode());
