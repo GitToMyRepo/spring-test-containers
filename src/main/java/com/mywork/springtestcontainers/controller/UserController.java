@@ -5,6 +5,8 @@ import com.mywork.springtestcontainers.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/users")
 public class UserController {
@@ -24,5 +26,10 @@ public class UserController {
     @GetMapping(path = "/{id}")
     public User findUserById(@PathVariable String id) {
         return userService.findUserById(id);
+    }
+
+    @GetMapping(path = "")
+    public List<User> getUsers() {
+        return userService.findAllUsers();
     }
 }
