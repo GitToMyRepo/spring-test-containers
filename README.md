@@ -19,7 +19,9 @@ docker run --name spring-test-postgres-container -e POSTGRES_PASSWORD=mysecretpa
 docker exec -it spring-test-postgres-container psql -U postgres
 ```
 
-# The application can be run from IntelliJ
+# Run the application
+The application can be run from IntelliJ
+
 ## Invoke the API either from Postman or using curl
 ```
 C:\Users\kenwu>curl http://localhost:8080/api/v1/users
